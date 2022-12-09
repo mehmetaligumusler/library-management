@@ -1,0 +1,3 @@
+C:\Users\alier\Desktop\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-app\bin\Debug\libraryManagerApp.exe
+C:\Users\alier\Desktop\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-app\bin\Debug\libraryManagerApp.exe.config
+C:\Users\alier\Desktop\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-app\bin\Debug\libraryManagerDLL.dll

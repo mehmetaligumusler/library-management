@@ -1,0 +1,6 @@
+obj\Debug\Product.wixobj
+C:\Users\alier\Desktop\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-app-setup\bin\Debug\library_manager_app_setup.msi
+C:\Users\alier\Desktop\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-app-setup\bin\Debug\library_manager_app_setup.wixpdb
+obj\Debug\library-manager-app-setup.wixproj.BindContentsFileListnull.txt
+obj\Debug\library-manager-app-setup.wixproj.BindOutputsFileListnull.txt
+obj\Debug\library-manager-app-setup.wixproj.BindBuiltOutputsFileListnull.txt
