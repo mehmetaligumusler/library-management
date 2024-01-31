@@ -10,3 +10,9 @@ C:\Users\alier\Desktop\benim kodlu ödev\ce103-hw3-2022-2023-mehmetali-gumusler\
 C:\Users\alier\Desktop\benim kodlu ödev\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-dll\obj\Debug\library-manager-dll.csproj.CoreCompileInputs.cache
 C:\Users\alier\Desktop\benim kodlu ödev\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-dll\obj\Debug\libraryManagerDLL.dll
 C:\Users\alier\Desktop\benim kodlu ödev\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-dll\obj\Debug\libraryManagerDLL.pdb
+C:\Users\alier\Desktop\library-management\library-manager-dll\bin\Debug\libraryManagerDLL.dll
+C:\Users\alier\Desktop\library-management\library-manager-dll\bin\Debug\libraryManagerDLL.pdb
+C:\Users\alier\Desktop\library-management\library-manager-dll\obj\Debug\library-manager-dll.csproj.AssemblyReference.cache
+C:\Users\alier\Desktop\library-management\library-manager-dll\obj\Debug\library-manager-dll.csproj.CoreCompileInputs.cache
+C:\Users\alier\Desktop\library-management\library-manager-dll\obj\Debug\libraryManagerDLL.dll
+C:\Users\alier\Desktop\library-management\library-manager-dll\obj\Debug\libraryManagerDLL.pdb

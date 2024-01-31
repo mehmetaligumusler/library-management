@@ -42,3 +42,13 @@ C:\Users\alier\Desktop\LibraryManagementSystem\ce103-hw3-2022-2023-mehmetali-gum
 C:\Users\alier\Desktop\LibraryManagementSystem\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-app\obj\Debug\library-manager-app.csproj.CopyComplete
 C:\Users\alier\Desktop\LibraryManagementSystem\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-app\obj\Debug\libraryManagerApp.exe
 C:\Users\alier\Desktop\LibraryManagementSystem\ce103-hw3-2022-2023-mehmetali-gumusler\library-manager-app\obj\Debug\libraryManagerApp.pdb
+C:\Users\alier\Desktop\library-management\library-manager-app\bin\Debug\libraryManagerApp.exe.config
+C:\Users\alier\Desktop\library-management\library-manager-app\bin\Debug\libraryManagerApp.exe
+C:\Users\alier\Desktop\library-management\library-manager-app\bin\Debug\libraryManagerApp.pdb
+C:\Users\alier\Desktop\library-management\library-manager-app\bin\Debug\libraryManagerDLL.dll
+C:\Users\alier\Desktop\library-management\library-manager-app\bin\Debug\libraryManagerDLL.pdb
+C:\Users\alier\Desktop\library-management\library-manager-app\obj\Debug\library-manager-app.csproj.AssemblyReference.cache
+C:\Users\alier\Desktop\library-management\library-manager-app\obj\Debug\library-manager-app.csproj.CoreCompileInputs.cache
+C:\Users\alier\Desktop\library-management\library-manager-app\obj\Debug\library-manager-app.csproj.CopyComplete
+C:\Users\alier\Desktop\library-management\library-manager-app\obj\Debug\libraryManagerApp.exe
+C:\Users\alier\Desktop\library-management\library-manager-app\obj\Debug\libraryManagerApp.pdb

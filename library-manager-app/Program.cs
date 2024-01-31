@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿//Program.cs
+
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System;
@@ -74,6 +76,7 @@ namespace LibraryManagementApp
         //INDIVIDUAL ADMIN LOGIN CREDENTIAL CHECKING
         public void AdminLogin()
         {
+            //private const string adminFilePath = "admin.dat"; // Admin bilgilerini saklayacağınız dosya
             try
             {
                 Console.Clear();
@@ -184,6 +187,7 @@ namespace LibraryManagementApp
     class BookPL
     {
         private Book book = new Book();
+        private IDataAccess<Book> dataAccess = new BookDataAccess(); // BookDataAccess sınıfını kullanarak IDataAccess<Book> türünde bir nesne oluşturuyoruz.
         //BOOK MENU
         private void GetBookMenu()
         {
@@ -243,8 +247,18 @@ namespace LibraryManagementApp
                 Console.SetCursorPosition(45, 20);
                 Console.WriteLine("Book Pages: ");
                 book.BookPages= int.Parse(Console.ReadLine());
+
+                /*
                 BookBLL addBook = new BookBLL();
                 addBook.AddBookBLL(book.BookId, book.BookName, book.BookAuthor, book.BookCopies, book.BookYear, book.BookPages);
+                */
+
+                // Dosya operasyonları
+                List<Book> books = dataAccess.ReadFromFile("books.dat");
+                books.Add(book);
+                dataAccess.WriteToFile(books, "books.dat");
+
+                Console.WriteLine("Book added successfully!");
             }
             catch (FormatException)
             {
@@ -264,7 +278,6 @@ namespace LibraryManagementApp
             Console.Clear();
             try
             {
-
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.SetCursorPosition(45, 4);
                 Console.WriteLine("Enter book details..");
@@ -272,23 +285,38 @@ namespace LibraryManagementApp
                 Console.SetCursorPosition(45, 10);
                 Console.Write("Book ID: ");
                 book.BookId = int.Parse(Console.ReadLine());
-                Console.SetCursorPosition(45, 12);
-                Console.Write("Book Name: ");
-                book.BookName = Console.ReadLine();
-                Console.SetCursorPosition(45, 14);
-                Console.Write("Book Author: ");
-                book.BookAuthor = Console.ReadLine();
-                Console.SetCursorPosition(45, 16);
-                Console.Write("Book Copies: ");
-                book.BookCopies = int.Parse(Console.ReadLine());
-                Console.SetCursorPosition(45, 18);
-                Console.WriteLine("Book Year: ");
-                book.BookYear = int.Parse(Console.ReadLine());
-                Console.SetCursorPosition(45, 20);
-                Console.WriteLine("Book Pages: ");
-                book.BookPages= int.Parse(Console.ReadLine());
-                BookBLL updateBook = new BookBLL();
-                updateBook.UpdateBookBLL(book.BookId, book.BookName, book.BookAuthor, book.BookCopies, book.BookYear, book.BookPages);
+
+                List<Book> books = dataAccess.ReadFromFile("books.dat");
+                Book existingBook = books.FirstOrDefault(b => b.BookId == book.BookId);
+
+                if (existingBook != null)
+                {
+                    Console.SetCursorPosition(45, 12);
+                    Console.Write("Book Name: ");
+                    existingBook.BookName = Console.ReadLine();
+                    Console.SetCursorPosition(45, 14);
+                    Console.Write("Book Author: ");
+                    existingBook.BookAuthor = Console.ReadLine();
+                    Console.SetCursorPosition(45, 16);
+                    Console.Write("Book Copies: ");
+                    existingBook.BookCopies = int.Parse(Console.ReadLine());
+                    Console.SetCursorPosition(45, 18);
+                    Console.WriteLine("Book Year: ");
+                    existingBook.BookYear = int.Parse(Console.ReadLine());
+                    Console.SetCursorPosition(45, 20);
+                    Console.WriteLine("Book Pages: ");
+                    existingBook.BookPages = int.Parse(Console.ReadLine());
+
+                    dataAccess.WriteToFile(books, "books.dat");
+
+                    Console.WriteLine("Book updated successfully!");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Book not found!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
             catch (FormatException)
             {
@@ -308,7 +336,6 @@ namespace LibraryManagementApp
             Console.Clear();
             try
             {
-
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.SetCursorPosition(45, 4);
                 Console.WriteLine("Enter book details..");
@@ -316,95 +343,110 @@ namespace LibraryManagementApp
                 Console.SetCursorPosition(45, 10);
                 Console.Write("Book ID: ");
                 book.BookId = int.Parse(Console.ReadLine());
-                BookBLL removeBook = new BookBLL();
-                removeBook.RemoveBookBLL(book.BookId);
+
+                List<Book> books = dataAccess.ReadFromFile("books.dat");
+                Book existingBook = books.FirstOrDefault(b => b.BookId == book.BookId);
+
+                if (existingBook != null)
+                {
+                    books.Remove(existingBook);
+                    dataAccess.WriteToFile(books, "books.dat");
+                    Console.WriteLine("Book removed successfully!");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Book not found!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
-            catch
+            catch (FormatException)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.SetCursorPosition(1, 1);
                 Console.WriteLine("Enter a valid input");
                 Console.ForegroundColor = ConsoleColor.White;
             }
-            /*catch (FormatException)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Enter a valid input");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            catch (Exception)
+            catch (LibraryMSException)
             {
                 throw new LibraryMSException("Some unknown exception is occured..");
-            }*/
+            }
         }
         //RETRIEVE BOOKS FROM BOOK TABLE
         public void GetAllBook()
         {
-
-            List<Book> books = new List<Book>();
-            BookBLL bookTemp = new BookBLL();
-            books = bookTemp.GetAllBookBLL();
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("----------------------------------------------------------------");
-            Console.WriteLine("ID" + "\t" + "Name" + "\t" + "Author" + "\t" + "Copies" + "\t" + "Year" + "\t" + "Pages");
-            Console.ForegroundColor = ConsoleColor.White;
-            foreach (Book book in books)
+            try
             {
-                Console.WriteLine(book.BookId + "\t" + book.BookName + "\t" + book.BookAuthor + "\t" + book.BookCopies + "\t" + book.BookYear + "\t" + book.BookPages);
-            }
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("----------------------------------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(" Press Enter To Go Back Menu ");
-            Console.ReadKey();
-            Console.Clear();
-        }
+                List<Book> books = dataAccess.ReadFromFile("books.dat");
 
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.WriteLine("ID" + "\t" + "Name" + "\t" + "Author" + "\t" + "Copies" + "\t" + "Year" + "\t" + "Pages");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                foreach (Book book in books)
+                {
+                    Console.WriteLine(book.BookId + "\t" + book.BookName + "\t" + book.BookAuthor + "\t" + book.BookCopies + "\t" + book.BookYear + "\t" + book.BookPages);
+                }
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("----------------------------------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" Press Enter To Go Back Menu ");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            catch (LibraryMSException)
+            {
+                throw new LibraryMSException("Some unknown exception is occured..");
+            }
+        }
         internal void SearchBook()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(45, 4);
             Console.WriteLine("Enter book details..");
-            while (true)
+
+            try
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.SetCursorPosition(45, 10);
                 Console.Write("Enter name of the book: ");
                 string search = Console.ReadLine();
-                
-                //var bTitle = Console.ReadLine();
-                foreach (var book in BookDAL.books)
+
+                List<Book> books = dataAccess.ReadFromFile("books.dat");
+                Book foundBook = books.FirstOrDefault(b => b.BookName.Equals(search, StringComparison.OrdinalIgnoreCase));
+
+                if (foundBook != null)
                 {
-                    if (search == book.BookName )
-                    {
-                        Console.Clear();
-                        
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        //Console.SetCursorPosition(1, 1);
-                        Console.WriteLine("Search Results");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.WriteLine($"{"ID",-15}{"Name",-15}{"Author",-15}{"Copies",-15}{"Year",-15}{"Pages",-15}");
-                        Console.WriteLine("".PadRight(100, '-'));
-                        book.DisplayDetails();
-                        Console.SetCursorPosition(1, 10);
-                        Console.WriteLine(" Press Enter To Go Back Menu ");
-                        Console.ReadKey();
-                        Console.Clear();
-                        return;
-                    }
+                    Console.Clear();
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Search Results");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"{"ID",-15}{"Name",-15}{"Author",-15}{"Copies",-15}{"Year",-15}{"Pages",-15}");
+                    Console.WriteLine("".PadRight(100, '-'));
+                    foundBook.DisplayDetails();
+                    Console.SetCursorPosition(1, 10);
+                    Console.WriteLine(" Press Enter To Go Back Menu ");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
-                
-                //Beautify.Error("Book doesn't exist");
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Book not found!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
-            
-            //Beautify.ClearScreen("continue");
+            catch (LibraryMSException)
+            {
+                throw new LibraryMSException("Some unknown exception is occured..");
+            }
         }
-
-
-            //COMPLETE BOOK SECTION
-            public void BookSection()
+        //COMPLETE BOOK SECTION
+        public void BookSection()
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.White;

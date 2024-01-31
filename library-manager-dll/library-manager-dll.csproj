@@ -43,7 +43,8 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="Admin.cs" />
-    <Compile Include="LibraryManager.cs" />
+    <Compile Include="DataAccess.cs" />
+    <Compile Include="IDataAccess.cs" />
     <Compile Include="LibraryMS.Exception.cs" />
     <Compile Include="FileUtility.cs" />
     <Compile Include="ConversionUtility.cs" />
