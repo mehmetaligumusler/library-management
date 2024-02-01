@@ -1,23 +1,32 @@
-﻿using System;
+﻿// LibraryMSException.cs
+
+using System;
 using LibraryManagement;
 
-namespace LibraryManagement
-{
-    public class LibraryMSException : ApplicationException
-    {
-        //CUSTOM EXCEPTION HANDLING METHODS
-        public LibraryMSException() : base()
-        {
+namespace LibraryManagement {
+/// <summary>
+/// Custom exception class for Library Management System.
+/// </summary>
+public class LibraryMSException : ApplicationException {
+  /// <summary>
+  /// Default constructor.
+  /// </summary>
+  public LibraryMSException() : base() {
+  }
 
-        }
-        public LibraryMSException(string message) : base(message)
-        {
+  /// <summary>
+  /// Constructor with a custom error message.
+  /// </summary>
+  /// <param name="message">Custom error message.</param>
+  public LibraryMSException(string message) : base(message) {
+  }
 
-        }
-        public LibraryMSException(string msg, FormatException InneException) : base(msg, InneException)
-        {
-
-        }
-
-    }
+  /// <summary>
+  /// Constructor with a custom error message and an inner exception.
+  /// </summary>
+  /// <param name="msg">Custom error message.</param>
+  /// <param name="innerException">Inner exception.</param>
+  public LibraryMSException(string msg, FormatException innerException) : base(msg, innerException) {
+  }
+}
 }

@@ -1,0 +1,164 @@
+﻿// ConversionUtility.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using LibraryManagement;
+
+namespace LibraryManagement
+{
+    /// <summary>
+    /// Utility class for converting data types.
+    /// </summary>
+    public static class ConversionUtility
+    {
+        /// <summary>
+        /// Converts a hex string to a byte array.
+        /// </summary>
+        public static byte[] ToByte(this string hexString)
+        {
+            return Enumerable
+                .Range(0, hexString.Length)
+                .Where(x => x % 2 == 0)
+                .Select(x => Convert.ToByte(hexString.Substring(x, 2), 16))
+                .ToArray();
+        }
+
+        /// <summary>
+        /// Converts a byte array to a hex string.
+        /// </summary>
+        public static string ToHex(this byte[] arr)
+        {
+            var sb = new StringBuilder(arr.Length * 2);
+            foreach (byte b in arr)
+            {
+                sb.AppendFormat("{0:X2}", b);
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Checks if a string is a valid hex string.
+        /// </summary>
+        public static bool IsHex(this string str)
+        {
+            try
+            {
+                str.ToByte();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets an integer from a byte array with the specified offset and length.
+        /// </summary>
+        public static int GetInt(this byte[] data, int offset, int length)
+        {
+            var result = 0;
+            for (var i = 0; i < length; i++)
+            {
+                result = (result << 8) | data[offset + i];
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts a hex string to ASCII string.
+        /// </summary>
+        public static string ToAscii(this string hexString)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i <= hexString.Length - 2; i += 2)
+            {
+                sb.Append(Convert.ToString(Convert.ToChar(Int32.Parse(hexString.Substring(i, 2), System.Globalization.NumberStyles.HexNumber))));
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Converts a byte array to an integer.
+        /// </summary>
+        public static int ByteArrayToInteger(byte[] byteArray)
+        {
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(byteArray);
+
+            return BitConverter.ToInt32(byteArray, 0);
+        }
+
+        /// <summary>
+        /// Converts an integer to a byte array.
+        /// </summary>
+        public static byte[] IntegerToByteArray(int value)
+        {
+            byte[] intBytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(intBytes);
+            }
+
+            return intBytes;
+        }
+
+        /// <summary>
+        /// Converts a list of strings to a byte array with specified item count and max length.
+        /// </summary>
+        public static byte[] StringListToByteArray(List<string> array, int itemMaxCount, int itemMaxLength)
+        {
+            byte[] outputBytes = new byte[itemMaxCount * itemMaxLength];
+            int index = 0;
+            foreach (string val in array)
+            {
+                byte[] valBytes = StringToByteArray(val);
+                Array.Copy(valBytes, 0, outputBytes, index, valBytes.Length);
+                index += itemMaxLength;
+            }
+
+            return outputBytes;
+        }
+
+        /// <summary>
+        /// Converts a byte array to a list of strings with specified item count and max length.
+        /// </summary>
+        public static List<string> ByteArrayToStringList(byte[] byteArray, int itemMaxCount, int itemMaxLength)
+        {
+            List<string> list = new List<string>();
+
+            for (int i = 0; i < itemMaxCount; i++)
+            {
+                byte[] itemBytes = new byte[itemMaxLength];
+                Array.Copy(byteArray, i * itemMaxLength, itemBytes, 0, itemMaxLength);
+                string val = ByteArrayToString(itemBytes);
+                if (val != null && val != String.Empty)
+                {
+                    list.Add(val);
+                }
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Converts a string to a byte array using ASCII encoding.
+        /// </summary>
+        public static byte[] StringToByteArray(string data)
+        {
+            return Encoding.ASCII.GetBytes(data);
+        }
+
+        /// <summary>
+        /// Converts a byte array to a string using UTF-8 encoding.
+        /// </summary>
+        public static string ByteArrayToString(byte[] byteArray)
+        {
+            return System.Text.Encoding.UTF8.GetString(byteArray, 0, byteArray.Length).Trim('\0');
+        }
+    }
+}

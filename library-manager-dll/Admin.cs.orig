@@ -1,0 +1,97 @@
+﻿//Admin.cs
+
+using System;
+using System.Collections.Generic;
+using LibraryManagement;
+
+
+namespace LibraryManagement
+{
+
+    #region Admin Class
+    /// <summary>
+    /// Represents an administrator entity with properties like AdminId, AdminName, Username, Password.
+    /// </summary>
+    public class Admin
+    {
+        public int AdminId { get; set; }
+        public string AdminName { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        /// <summary>
+        /// Default constructor initializing the properties with default values.
+        /// </summary>
+        public Admin()
+        {
+            AdminId = 0;
+            AdminName = string.Empty;
+            Username = string.Empty;
+            Password = string.Empty;
+        }
+    }
+    #endregion
+
+
+    #region Admin Data
+    /// <summary>
+    /// Data Access Layer (DAL) for managing administrators.
+    /// </summary>
+    public class AdminDAL
+    {
+
+       
+        private static List<Admin> admins = new List<Admin>()
+        {
+            new Admin()
+            {
+                AdminId=1,AdminName="Librarian",Username="",Password=""
+            },
+        };
+        /// <summary>
+        /// Returns a list of all administrators.
+        /// </summary>
+        /// <returns></returns>
+        public List<Admin> GetAllAdminsDAL()
+        {
+            return admins;
+        }
+    }
+    #endregion
+
+
+    #region Admin Validation
+    /// <summary>
+    /// Business Logic Layer (BLL) for validating and managing administrators.
+    /// </summary>
+    public class AdminBLL
+    {
+        /// <summary>
+        /// Validates the admin credentials for login.
+        /// </summary>
+        /// <param name="adminUsername"></param>
+        /// <param name="adminPass"></param>
+        /// <returns></returns>
+        public bool AdminLogin(string adminUsername, string adminPass)
+        {
+            AdminDAL adminDAL = new AdminDAL();
+            List<Admin> admins = adminDAL.GetAllAdminsDAL();
+            bool isDone = admins.Exists(a => a.Username == adminUsername && a.Password == adminPass);
+            if (isDone)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Logged in successfully...");
+                Console.ForegroundColor = ConsoleColor.White;
+                return true;
+            }
+            else
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid Username or Password...");
+                Console.ForegroundColor = ConsoleColor.White;
+                return false;
+            }
+        }
+    }
+    #endregion
+}

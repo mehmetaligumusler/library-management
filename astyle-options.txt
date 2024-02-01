@@ -24,4 +24,4 @@ max-code-length=200
 # If the line contains logical conditionals they will be placed first on the new line.
 break-after-logical
 # Force use of the linux end of line
-lineend=linux
+# lineend=linux
